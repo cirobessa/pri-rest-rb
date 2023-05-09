@@ -7,7 +7,7 @@ sudo mkdir -p "$DEST"
 
 DOWNLOAD_DIR="/usr/local/bin"
 sudo mkdir -p "$DOWNLOAD_DIR"
-
+export PATH=$PATH:$DOWNLOAD_DIR
 CRICTL_VERSION="v1.25.0"
 ARCH="amd64"
 /usr/bin/curl -L "https://github.com/kubernetes-sigs/cri-tools/releases/download/${CRICTL_VERSION}/crictl-${CRICTL_VERSION}-linux-${ARCH}.tar.gz" | sudo tar -C $DOWNLOAD_DIR -xz
