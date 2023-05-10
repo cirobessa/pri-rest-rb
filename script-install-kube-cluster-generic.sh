@@ -68,7 +68,7 @@ file /usr/local/bin/kubectl
 sudo chmod 755 /usr/local/bin/kubectl
 
 echo KUBEADM INIT cluster
-sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.25.0
+sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.26.0
 
 /usr/bin/chmod +x kubectl
 /usr/bin/mkdir -p ~/.local/bin
