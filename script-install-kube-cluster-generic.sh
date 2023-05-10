@@ -27,11 +27,41 @@ sudo mkdir -p /etc/systemd/system/kubelet.service.d
 
 sudo systemctl enable --now kubelet
 
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+# sysctl params required by setup, params persist across reboots
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+
+# Apply sysctl params without reboot
+sudo sysctl --system
+
+
+lsmod | grep br_netfilter
+lsmod | grep overlay
+
+sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
+
+
+
+
+
 
 /usr/bin/curl -LO "https://dl.k8s.io/release/$(/usr/bin/curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
 sudo /usr/bin/install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
+
+sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.25.0
 
 /usr/bin/chmod +x kubectl
 /usr/bin/mkdir -p ~/.local/bin
@@ -46,4 +76,20 @@ kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
 sudo chmod a+r /etc/bash_completion.d/kubectl
 
 source ~/.bashrc
+
+sudo swapoff -a
+ export PATH=$PATH:/usr/local/bin
+
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+# Install the Calico network add-on
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
+
+
+
+
+# Get the join command (this command is also printed during kubeadm init . Feel free to simply copy it from there)
+
+kubeadm token create --print-join-command
+
 
