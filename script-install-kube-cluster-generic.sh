@@ -81,6 +81,8 @@ echo 'source <(kubectl completion bash)' >>~/.bashrc
 kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
 sudo chmod a+r /etc/bash_completion.d/kubectl
 
+
+echo  export PATH=$PATH:/usr/local/bin >>  ~/.bashrc
 source ~/.bashrc
 
 
