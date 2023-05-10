@@ -130,3 +130,11 @@ echo "
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config"  >> ~/.bash_profile 
 #
+sleep 30
+
+## JOIN THE KUBE CLUSTER
+bucket=`aws s3 ls | grep internal | awk '{ print $3}'`
+aws s3 cp s3://${bucket}/join-command.sh .
+ bash -x join-command.sh 
+ 
+ 
