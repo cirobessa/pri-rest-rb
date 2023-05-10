@@ -67,8 +67,7 @@ file /usr/local/bin/kubectl
 #sudo /usr/bin/install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 sudo chmod 755 /usr/local/bin/kubectl
 
-echo KUBEADM INIT cluster
-sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.26.0
+
 
 /usr/bin/chmod +x kubectl
 /usr/bin/mkdir -p ~/.local/bin
@@ -89,11 +88,25 @@ source ~/.bashrc
 
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
-# Install the Calico network add-on
+
+#
+echo Install the Calico network add-on
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
 
+#
+echo CONTAINERD session
+cd /usr/local/
+curl -LO https://github.com/containerd/containerd/releases/download/v1.7.1/containerd-1.7.1-linux-amd64.tar.gz
+tar Cxzvf /usr/local containerd-1.7.1-linux-amd64.tar.gz
+curl -LO https://raw.githubusercontent.com/containerd/containerd/main/containerd.service 
+cp containerd.service /usr/lib/systemd/system/
+systemctl daemon-reload && sleep 1
+systemctl enable --now containerd
+curl -LO https://github.com/opencontainers/runc/releases/download/v1.1.7/runc.amd64
+install -m 755 runc.amd64 /usr/local/sbin/runc
 
-
+echo KUBEADM INIT cluster
+sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.26.0
 
 # Get the join command (this command is also printed during kubeadm init . Feel free to simply copy it from there)
 
