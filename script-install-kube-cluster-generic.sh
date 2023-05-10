@@ -1,3 +1,10 @@
+
+
+sudo swapoff -a
+ export PATH=$PATH:/usr/local/bin
+
+
+
 CNI_PLUGINS_VERSION="v1.1.1"
 ARCH="amd64"
 DEST="/opt/cni/bin"
@@ -76,8 +83,6 @@ sudo chmod a+r /etc/bash_completion.d/kubectl
 
 source ~/.bashrc
 
-sudo swapoff -a
- export PATH=$PATH:/usr/local/bin
 
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
