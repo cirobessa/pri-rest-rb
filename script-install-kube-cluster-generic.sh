@@ -121,6 +121,7 @@ kubeadm token create --print-join-command
 
 #
 echo additional settings
+echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >> /root/.bash_profile 
 echo "
   mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
