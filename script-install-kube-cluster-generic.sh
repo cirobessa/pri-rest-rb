@@ -117,9 +117,22 @@ echo KUBEADM INIT cluster
 
 # Get the join command (this command is also printed during kubeadm init . Feel free to simply copy it from there)
 
-kubeadm token create --print-join-command
+# export JOIN COMMAND
+kubeadm token create --print-join-command > /tmp/join-command.sh
+aws s3 mb s3://${HOSTNAME}/
+aws s3 cp /tmp/join-command.sh s3://${HOSTNAME}/
 
 
+#
+echo Install the Calico network add-on
+export KUBECONFIG=/etc/kubernetes/admin.conf
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
+	
+#kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+#kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+
+
+ 
 #
 echo additional settings
 echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >> /root/.bash_profile 
@@ -134,17 +147,3 @@ echo "
   mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config"  >> ~/.bash_profile 
-#
-echo Install the Calico network add-on
-export KUBECONFIG=/etc/kubernetes/admin.conf
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
-	
-#kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-#kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
-
-# export JOIN COMMAND
-kubeadm token create --print-join-command > /tmp/join-command.sh
-aws s3 mb s3://${HOSTNAME}/
-aws s3 cp /tmp/join-command.sh s3://${HOSTNAME}/
- 
-
