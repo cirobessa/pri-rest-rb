@@ -106,6 +106,8 @@ crictl config --set runtime-endpoint=unix:///run/containerd/containerd.sock --se
 echo SO dependencies
 which yum && yum install ebtables ethtool socat tc conntrack -y
 which apt && apt install ebtables ethtool socat tc conntrack -y
+echo avoid init errors
+cp /usr/local/bin/crictl /usr/bin
 
 echo KUBEADM INIT cluster
 sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version $RELEASE
