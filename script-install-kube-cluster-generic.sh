@@ -112,16 +112,20 @@ ln -s /usr/local/bin/crictl /usr/bin/
 ln -s /usr/local/bin/kubelet /usr/bin/
 
 echo KUBEADM INIT cluster
-#sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version $RELEASE --ignore-preflight-errors=cri
+#sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version $RELEASE
  exec kubeadm init --pod-network-cidr 192.168.0.0/16 
 
-# Get the join command (this command is also printed during kubeadm init . Feel free to simply copy it from there)
+# wait cluster to spin up
+sleep 20
 
+# Get the join command (this command is also printed during kubeadm init)
 # export JOIN COMMAND
+echo upload JOIN COMMAND to S3
 kubeadm token create --print-join-command > /tmp/join-command.sh
 aws s3 mb s3://${HOSTNAME}/
 aws s3 cp /tmp/join-command.sh s3://${HOSTNAME}/
-
+aws s3 ls 
+aws s3 ls s3://${HOSTNAME}/
 
 #
 echo Install the Calico network add-on
