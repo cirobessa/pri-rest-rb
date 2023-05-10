@@ -83,6 +83,7 @@ sudo chmod a+r /etc/bash_completion.d/kubectl
 
 
 echo  export PATH=$PATH:/usr/local/bin >>  ~/.bashrc
+echo export KUBECONFIG=/etc/kubernetes/admin.conf >> ~/.bashrc
 source ~/.bashrc
 
 
