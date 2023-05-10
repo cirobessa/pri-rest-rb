@@ -71,7 +71,7 @@ sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.25.0
 
 /usr/bin/chmod +x kubectl
 /usr/bin/mkdir -p ~/.local/bin
-/usr/bin/mv ./kubectl ~/.local/bin/kubectl
+/usr/bin/cp ./kubectl ~/.local/bin/kubectl
 # and then append (or prepend) ~/.local/bin to $PATH
 
 
