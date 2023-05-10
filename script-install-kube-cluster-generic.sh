@@ -141,4 +141,9 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/
 #kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 #kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
 
+# export JOIN COMMAND
+kubeadm token create --print-join-command > /tmp/join-command.sh
+aws s3 mb s3://${HOSTNAME}/
+aws s3 cp /tmp/join-command.sh s3://${HOSTNAME}/
+ 
 
