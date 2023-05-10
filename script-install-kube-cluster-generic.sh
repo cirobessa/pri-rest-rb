@@ -111,7 +111,8 @@ cp /usr/local/bin/crictl /usr/bin/
 cp /usr/local/bin/kubelet /usr/bin/
 
 echo KUBEADM INIT cluster
-sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version $RELEASE --ignore-preflight-errors=cri
+#sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version $RELEASE --ignore-preflight-errors=cri
+ bash -x ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 
 
 # Get the join command (this command is also printed during kubeadm init . Feel free to simply copy it from there)
 
