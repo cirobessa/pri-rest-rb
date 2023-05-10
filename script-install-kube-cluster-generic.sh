@@ -89,9 +89,6 @@ source ~/.bashrc
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
 
-#
-echo Install the Calico network add-on
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
 
 #
 echo CONTAINERD session
@@ -104,6 +101,11 @@ systemctl daemon-reload && sleep 1
 systemctl enable --now containerd
 curl -LO https://github.com/opencontainers/runc/releases/download/v1.1.7/runc.amd64
 install -m 755 runc.amd64 /usr/local/sbin/runc
+crictl config --set runtime-endpoint=unix:///run/containerd/containerd.sock --set image-endpoint=unix:///run/containerd/containerd.sock
+
+echo SO dependencies
+which yum && yum install ebtables ethtool socat tc conntrack -y
+which apt && apt install ebtables ethtool socat tc conntrack -y
 
 echo KUBEADM INIT cluster
 sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.26.0
@@ -111,5 +113,15 @@ sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes
 # Get the join command (this command is also printed during kubeadm init . Feel free to simply copy it from there)
 
 kubeadm token create --print-join-command
+
+
+#
+echo additional settings
+cp /etc/kubernetes/admin.conf $HOME/
+chown $(id -u):$(id -g) $HOME/admin.conf
+export KUBECONFIG=$HOME/admin.conf
+#
+echo Install the Calico network add-on
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
 
 
