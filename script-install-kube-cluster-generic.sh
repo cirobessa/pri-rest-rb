@@ -136,6 +136,7 @@ echo "
   sudo chown $(id -u):$(id -g) $HOME/.kube/config"  >> ~/.bash_profile 
 #
 echo Install the Calico network add-on
+export KUBECONFIG=/etc/kubernetes/admin.conf
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
 	
 #kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
