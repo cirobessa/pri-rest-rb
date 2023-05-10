@@ -57,6 +57,7 @@ kubectlVersion=`/usr/bin/curl -L -s https://dl.k8s.io/release/stable.txt`
 
 
 /usr/bin/curl -LO "https://dl.k8s.io/release/${kubectlVersion}/bin/linux/amd64/kubectl"
+cp  kubectl /usr/local/bin/kubectl 
 
 #sudo /usr/bin/install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 sudo chmod 755 /usr/local/bin/kubectl
