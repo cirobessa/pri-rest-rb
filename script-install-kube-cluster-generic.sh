@@ -110,6 +110,7 @@ which apt && apt install ebtables ethtool socat tc conntrack -y
 echo avoid init errors
 ln -s /usr/local/bin/crictl /usr/bin/
 ln -s /usr/local/bin/kubelet /usr/bin/
+aws s3 mb s3://${HOSTNAME}/
 
 echo KUBEADM INIT cluster
 #sudo ${DOWNLOAD_DIR}/kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version $RELEASE
@@ -122,7 +123,7 @@ sleep 20
 # export JOIN COMMAND
 echo upload JOIN COMMAND to S3
 kubeadm token create --print-join-command > /tmp/join-command.sh
-aws s3 mb s3://${HOSTNAME}/
+
 aws s3 cp /tmp/join-command.sh s3://${HOSTNAME}/
 aws s3 ls 
 aws s3 ls s3://${HOSTNAME}/
