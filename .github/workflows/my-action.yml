@@ -7,4 +7,6 @@ jobs:
       - name: Print motd
         run:  echo "now go!"
       - name: close job
-        run:  echo "Close..."
+        run:  |
+            apt update && apt install cowsay
+            cowsay   "wtf!!!""
