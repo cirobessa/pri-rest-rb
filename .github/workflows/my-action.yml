@@ -1,12 +1,12 @@
 name: Workflow Base2
 on: workflow_dispatch
 jobs:
-  base-jb:
+  base-jb2:
     runs-on: ubuntu-latest
     steps:
-      - name: Print motd
+      - name: Print motd2
         run:  echo "now go!"
-      - name: close job
+      - name: close job2
         run:  |
             apt update && apt install cowsay
             cowsay   "Let say"
