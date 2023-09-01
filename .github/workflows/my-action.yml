@@ -5,8 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print motd2
-        run:  echo "now go!"
+        run:  echo "now go! "
       - name: close job2
         run:  |
-            apt update && apt install cowsay
+            apt update && apt install -y cowsay
             cowsay   "Let say"
