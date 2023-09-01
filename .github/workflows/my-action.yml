@@ -1,0 +1,10 @@
+name: Workflow Base
+on: workflow_dispatch
+jobs:
+  base-jb:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print motd
+        run:  echo "now go!"
+      - name: close job
+        run:  echo "Close..."
