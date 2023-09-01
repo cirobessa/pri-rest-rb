@@ -1,4 +1,4 @@
-name: Workflow Base
+name: Workflow Base2
 on: workflow_dispatch
 jobs:
   base-jb:
