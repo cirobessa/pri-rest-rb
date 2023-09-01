@@ -9,4 +9,4 @@ jobs:
       - name: close job
         run:  |
             apt update && apt install cowsay
-            cowsay   "wtf!!!""
+            cowsay   "Let say"
